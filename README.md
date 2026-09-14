@@ -32,6 +32,10 @@ A new Ghostty window opens in that folder, titled with the folder's name.
 If the Quick Actions don't show up in the menu right away, check
 **System Settings → Keyboard → Keyboard Shortcuts → Services** and make sure they're enabled.
 
+If they still don't appear, go to **System Settings → General → Login Items & Extensions**,
+click the **By Category** tab, open the **Finder** entry, and toggle on both
+**"Open Claude in Ghostty"** and **"Open in Ghostty"**.
+
 ## Uninstall
 
 ```
@@ -48,7 +52,9 @@ them as arguments to the corresponding script in `bin/`. The scripts do:
 open -na Ghostty.app --args --working-directory="$dir" --title="$name"
 ```
 
-The claude variant adds `-e /usr/local/bin/claude` to that command to also launch claude.
+The claude variant adds `-e "$HOME/.local/bin/claude"` to that command to also launch claude.
 
 Note: `-e <command>` requires an absolute path — Ghostty invokes it via `login`, which uses a
-minimal `PATH` that doesn't include `/usr/local/bin`.
+minimal `PATH` that doesn't include most of your shell's usual `PATH` (including wherever
+`claude` actually installs its binary, e.g. `/usr/local/bin` or `~/.local/bin` — check with
+`which claude` if this stops working after an update).
